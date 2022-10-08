@@ -26,6 +26,8 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            // if (string.IsNullOrEmpty(registerDto.Username) || string.IsNullOrEmpty(registerDto.Password)) return BadRequest("Username or password cannot be empty");
+
             if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
 
             using var hmac = new HMACSHA512();
@@ -49,6 +51,8 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            if (string.IsNullOrEmpty(loginDto.Username)) return Unauthorized("Invalid username");
+
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username");
