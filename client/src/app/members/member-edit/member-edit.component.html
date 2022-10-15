@@ -1,6 +1,6 @@
-<div class="row" *ngIf="member">
+<div class="row mt-3" *ngIf="member">
   <div class="col-4">
-    <h1>Your profile</h1>
+    <h1>Add Photos</h1>
   </div>
   <div class="col-8">
     <div class="alert alert-info" *ngIf="editForm.dirty">
@@ -95,7 +95,7 @@
         </form>
       </tab>
       <tab heading="Edit Photos">
-        <p>Photo edit will go here</p>
+        <app-photo-editor [member]="member"></app-photo-editor>
       </tab>
     </tabset>
   </div>
