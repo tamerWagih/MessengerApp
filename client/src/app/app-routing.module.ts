@@ -11,6 +11,7 @@ import { MemberListsComponent } from './members/member-lists/member-lists.compon
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { MemberDetailedResolver } from './_models/member-detailed.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
       {
         path: 'members/:username',
         component: MemberDetailComponent,
+        resolve: { member: MemberDetailedResolver },
       },
       {
         path: 'member/edit',
