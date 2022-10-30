@@ -21,17 +21,19 @@ export class MemberMessagesComponent implements OnInit {
   @Input() messages: Message[] = [];
   @Input() username: string;
   messageContent: string;
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  loading = false;
 
   constructor(public messageService: MessagesService) {}
 
   ngOnInit() {}
 
   sendMessage() {
+    this.loading = true;
     this.messageService
       .sendMessage(this.username, this.messageContent)
       .then(() => {
         this.messageForm.reset();
-      });
+      })
+      .finally(() => (this.loading = false));
   }
 }
