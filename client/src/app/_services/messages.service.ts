@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
@@ -9,6 +9,7 @@ import { Message } from '../_models/message';
 import { User } from '../_models/User';
 import { BusyService } from './busy.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,11 @@ export class MessagesService {
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
-  constructor(private http: HttpClient, private busyService: BusyService) {}
+  constructor(
+    private http: HttpClient,
+    private busyService: BusyService,
+    private presense: PresenceService
+  ) {}
 
   createHubConnection(user: User, otherUsername: string) {
     this.busyService.busy();
@@ -38,6 +43,7 @@ export class MessagesService {
 
     this.hubConnection.on('ReceiveMessageThread', (messages) => {
       this.messageThreadSource.next(messages);
+      this.presense.unreadCount$ = this.presense.getUreadMessageCount();
     });
 
     this.hubConnection.on('NewMessage', (message) => {

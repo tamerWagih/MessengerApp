@@ -39,6 +39,15 @@ namespace API.Controllers
             return messages;
         }
 
+        [HttpGet("unread")]
+        public async Task<ActionResult<int>> GetUnreadMessageCountForUser([FromQuery] Messageparams messageparams)
+        {
+            messageparams.Username = User.GetUsername();
+            var count = await _unitOfWork.MessageRepository.GetUnreadMessagesCountForUser(messageparams);
+
+            return count;
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMessage(int id)
         {

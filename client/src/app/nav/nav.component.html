@@ -19,6 +19,14 @@
             >Messages</a
           >
         </li>
+        <li
+          *ngIf="presenceService.unreadCount$ | async as number"
+          class="nav-item"
+        >
+          <a class="nav-link" routerLink="/messages"
+            >Unread messages {{ presenceService.unreadCount$ | async }}</a
+          >
+        </li>
         <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active"
             >Admin</a

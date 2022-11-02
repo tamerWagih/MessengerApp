@@ -85,6 +85,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
         this.messages.sort((m1, m2) =>
           m1.messageSent > m2.messageSent ? 1 : -1
         );
+        this.presence.unreadCount$ = this.presence.getUreadMessageCount();
       });
   }
 

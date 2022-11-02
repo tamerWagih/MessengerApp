@@ -89,6 +89,15 @@ namespace API.Data
 
         }
 
+        public async Task<int> GetUnreadMessagesCountForUser(Messageparams messageParams)
+        {
+            return await _context.Messages
+                .OrderByDescending(m => m.MessageSent)
+                .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
+                .Where(u => u.RecipientUsername ==
+                    messageParams.Username && u.RecipientDeleted == false && u.DateRead == null).CountAsync();
+        }
+
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
             var messages = await _context.Messages

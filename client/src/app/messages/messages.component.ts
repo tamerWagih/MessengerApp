@@ -35,7 +35,6 @@ export class MessagesComponent implements OnInit {
         this.messages.sort((m1, m2) =>
           m1.messageSent > m2.messageSent ? 1 : -1
         );
-        console.log(this.messages);
 
         this.pagination = response.pagination;
         this.loading = false;

@@ -19,6 +19,7 @@ namespace API.Interfaces
         void DeleteMessage(Message message);
         Task<Message> GetMessage(int id);
         Task<PagedList<MessageDto>> GetMessagesForUser(Messageparams messageparams);
+        Task<int> GetUnreadMessagesCountForUser(Messageparams messageParams);
         Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername);
     }
 }
